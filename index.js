@@ -1,7 +1,6 @@
-
-
 var ethUtil = require("ethereumjs-util");
-
+var msg = "Hi";
+console.log(ethUtil.sha3(msg));
 var readline = require('readline-sync');
 
 var address = readline.question("What Address Would You Like To Verify : ");
@@ -290,9 +289,33 @@ function randomString(adre){
   "year","yellow","yes","yesterday","yet","you","young","younger",
   "your","yourself","youth","zero","zebra","zipper","zoo","zulu"
 ];
-var string ="//JadeFund Verify Account : " + adre + "\\\\"
+var dt = new Date();
+var timestamp = dt.toUTCString();
+var string = "[JadeFund.Org "+timestamp+"] I Verify That I Have Read The Jade Terms And Am The Current Owner Of This Account("+adre+") \n "
+var string ="// ||JadeFund|| I Verify That I Own This Ethereum Account : " + adre + "\\\\"
 for (var i = 0; i < 20; i++){
   string +=  " " + wordList[Math.floor(Math.random() * (wordList.length-1))]
 }
 return string;
 }
+
+
+
+
+
+               var msg = ethUtil.bufferToHex(new Buffer(thisMessage, 'utf8'));
+               var signingAddr = web3.eth.accounts[0];
+               var params = [msg, signingAddr];
+               var method = 'personal_sign';
+               console.log("Sent message for signing via MetaMask / Mist.");
+
+               web3.currentProvider.sendAsync({
+                   method: method,
+                   params: params,
+                   signingAddr: signingAddr
+               }, function (err, result) {
+                   if (err) return console.log(err);
+                   if (result.error) return console.log(result.error);
+                  console.log(result.result)
+                   console.log('Successfully Signed Message with ' + signingAddr);
+               });

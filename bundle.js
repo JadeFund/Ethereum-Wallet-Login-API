@@ -6836,7 +6836,7 @@ function genString(adre){
 
 var dt = new Date();
 var timestamp = dt.toUTCString();
-var string = "[JadeFund.Org | "+timestamp+"] \n\nI verify that I am the current owner of the account '"+adre +"', and that I have read and agree to the JadeFund privacy polcy and terms and conditons. \n \n###Begin Signing Key### \n"
+var string = "[JadeFund.Org | "+timestamp+"] \n\nI verify that I am the current owner of the account '"+adre +"', and that I have read and agree to the JadeFund privacy polcy along with the JadeFund terms and conditons. \n \n###Begin Signing Key### \n"
 
 string += wordList[Math.floor(Math.random() * (wordList.length-1))]
 for (var i = 0; i < 19; i++){

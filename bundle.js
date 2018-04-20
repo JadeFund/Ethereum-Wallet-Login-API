@@ -6545,12 +6545,15 @@ MetaMaskSign.addEventListener('click', function(event) {
   event.preventDefault()
   var from = web3.eth.accounts[0]
   var text = genString(from)
+  console.log(text)
   var msg = ethUtil.bufferToHex(new Buffer(text, 'utf8'))
-  // var msg = '0x1' // hexEncode(text)
-  console.log(msg)
+  console.log("-------------------------------")
+  console.log("Address : " + from)
+  console.log("-------------------------------")
+  console.log("Sending Message For Signing :")
+  console.log(text);
+  console.log("-------------------------------")
 
-
-   console.log('CLICKED, SENDING PERSONAL SIGN REQ 12345')
   var params = [msg, from]
   var method = 'personal_sign'
 
@@ -6561,20 +6564,20 @@ MetaMaskSign.addEventListener('click', function(event) {
   }, function (err, result) {
     if (err) return console.error(err)
     if (result.error) return console.error(result.error)
-    console.log('PERSONAL SIGNED:' + JSON.stringify(result.result))
+    console.log('Signature Returned: \n' + JSON.stringify(result.result))
+    console.log("-------------------------------")
 
-    console.log('recovering...')
     const msgParams = { data: msg }
     msgParams.sig = result.result
-    console.dir({ msgParams })
+  //  console.dir({ msgParams })
     const recovered = sigUtil.recoverPersonalSignature(msgParams)
-    console.dir({ recovered })
+  //  console.dir({ recovered })
 
     if (recovered === from.toLowerCase()) {
-      console.log('SigUtil Successfully verified signer as ' + from)
+      console.log('Successfully verified signer as ' + from)
     } else {
       console.dir(recovered)
-      console.log('SigUtil Failed to verify signer when comparing ' + recovered.result + ' to ' + from)
+      console.log('Failed to verify signer when comparing ' + recovered.result + ' to ' + from)
       console.log('Failed, comparing %s to %s', recovered, from)
     }
 
@@ -6833,9 +6836,10 @@ function genString(adre){
 
 var dt = new Date();
 var timestamp = dt.toUTCString();
-var string = "[JadeFund.Ors "+timestamp+"] I Verify That I Have Read The Jade Terms And Am The Current Owner Of This Account("+adre+") \n "
-var string ="// ||JadeFund|| I Verify That I Own This Ethereum Account : " + adre + "\\\\"
-for (var i = 0; i < 20; i++){
+var string = "[JadeFund.Org | "+timestamp+"] \n\nI verify that I am the current owner of the account '"+adre +"', and that I have read and agree to the JadeFund privacy polcy and terms and conditons. \n \n###Begin Signing Key### \n"
+
+string += wordList[Math.floor(Math.random() * (wordList.length-1))]
+for (var i = 0; i < 19; i++){
   string +=  " " + wordList[Math.floor(Math.random() * (wordList.length-1))]
 }
 return string;

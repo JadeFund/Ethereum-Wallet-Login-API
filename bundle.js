@@ -6575,10 +6575,14 @@ MetaMaskSign.addEventListener('click', function(event) {
 
     if (recovered === from.toLowerCase()) {
       console.log('Successfully verified signer as ' + from)
+      document.getElementById("Text").innerHTML = "Logged In As Account : " + from;
+
     } else {
       console.dir(recovered)
       console.log('Failed to verify signer when comparing ' + recovered.result + ' to ' + from)
       console.log('Failed, comparing %s to %s', recovered, from)
+      document.getElementById("Text").innerHTML = "MetaMask Login Failed.";
+
     }
 
   })
@@ -6836,10 +6840,10 @@ function genString(adre){
 
 var dt = new Date();
 var timestamp = dt.toUTCString();
-var string = "[JadeFund.Org | "+timestamp+"] \n\nI verify that I am the current owner of the account '"+adre +"', and that I have read and agree to the JadeFund privacy polcy along with the JadeFund terms and conditons. \n \n###Begin Signing Key### \n"
+var string = "[JadeFund Login | "+timestamp+"] \n\nI verify that I am the current owner of the account '"+adre +"', and that I have read and agree to the JadeFund privacy polcy along with the JadeFund terms and conditons. \n \n###Begin Signing Key### \n"
 
 string += wordList[Math.floor(Math.random() * (wordList.length-1))]
-for (var i = 0; i < 19; i++){
+for (var i = 0; i < 20; i++){
   string +=  " " + wordList[Math.floor(Math.random() * (wordList.length-1))]
 }
 return string;

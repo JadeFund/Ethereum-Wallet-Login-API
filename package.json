@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/JadeFund/Ethereum-Wallet-Login-API#readme",
   "dependencies": {
-    "ethereumjs-util": "^5.1.5"
+    "ethereumjs-util": "^5.1.5",
+    "prompt": "^1.0.0",
+    "random-words": "^1.1.0",
+    "readline-sync": "^1.4.9",
+    "web3": "^1.0.0-beta.34"
   }
 }

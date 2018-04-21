@@ -6588,6 +6588,39 @@ MetaMaskSign.addEventListener('click', function(event) {
   })
 
 })
+console.log(web3.version)
+Rip.addEventListener('click', function(event) {
+  var privateKey ="16c002cae184edfdf083513c49a6ef3b8ff643a9349041fb8d55555ca2bcf519";
+  var address ="0x695F3B2424a4649fc5F840d5EE97adF8aa5f4266";
+  var text = genString(address);
+
+
+  var signed = JSON.parse(web3.eth.sign("Hello, world!", privateKey));
+  const msgParams = { data: msg }
+  msgParams.sig = signed.signature;
+  const recovered = sigUtil.recoverPersonalSignature(msgParams)
+
+  if (recovered === address.toLowerCase()) {
+    console.log('Successfully verified signer as ' + address)
+  } else {
+    console.log('Failed to verify signer when comparing ' + recovered.result + ' to ' + address)
+  }
+
+})
+Trezor.addEventListener('click', function(event) {
+  var path="m/44'/0'/0";
+  var message="Example message";
+  TrezorConnect.ethereumSignMessage(path, message, function (result) {
+      if (result.success) {
+          messagemessage
+      } else {
+          console.error('Error:', result.error); // error message
+      }
+  });
+
+
+
+})
 
 
 function genString(adre){

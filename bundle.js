@@ -6575,53 +6575,85 @@ MetaMaskSign.addEventListener('click', function(event) {
 
     if (recovered === from.toLowerCase()) {
       console.log('Successfully verified signer as ' + from)
-      document.getElementById("Text").innerHTML = "Logged In As Account : " + from;
+      verified(from);
 
     } else {
       console.dir(recovered)
       console.log('Failed to verify signer when comparing ' + recovered.result + ' to ' + from)
       console.log('Failed, comparing %s to %s', recovered, from)
-      document.getElementById("Text").innerHTML = "MetaMask Login Failed.";
+      failed()
 
     }
 
   })
 
 })
+
 console.log(web3.version)
-Rip.addEventListener('click', function(event) {
-  var privateKey ="16c002cae184edfdf083513c49a6ef3b8ff643a9349041fb8d55555ca2bcf519";
-  var address ="0x695F3B2424a4649fc5F840d5EE97adF8aa5f4266";
-  var text = genString(address);
+
+PrivateKey.addEventListener('click', function(event) {
+
+  var privateKey =document.getElementById('privText').value;
+  if (!privateKey.startsWith("0x")) privateKey = "0x" + privateKey;
+  var address = ethUtil.privateToAddress(ethUtil.toBuffer(privateKey));
+  var address = "0x" + address.toString('hex');
+
+  var msg = genString(address);
+  console.log("-------------------------------")
+  console.log("Address : " + address)
+  console.log("-------------------------------")
+  console.log("Sending Message For Signing :")
+  console.log(msg);
+  console.log("-------------------------------")
 
 
-  var signed = JSON.parse(web3.eth.sign("Hello, world!", privateKey));
+  var signed = ethUtil.ecsign(ethUtil.hashPersonalMessage(ethUtil.toBuffer(msg)), ethUtil.toBuffer(privateKey));
+
+  var combined = Buffer.concat([Buffer.from(signed.r), Buffer.from(signed.s), Buffer.from([signed.v])]);
+  var signature = "0x" + combined.toString('hex');
+
   const msgParams = { data: msg }
-  msgParams.sig = signed.signature;
+  msgParams.sig = signature;
   const recovered = sigUtil.recoverPersonalSignature(msgParams)
 
   if (recovered === address.toLowerCase()) {
     console.log('Successfully verified signer as ' + address)
+    verified(address);
+
   } else {
+    console.dir(recovered)
     console.log('Failed to verify signer when comparing ' + recovered.result + ' to ' + address)
+    console.log('Failed, comparing %s to %s', recovered, address)
+    failed()
+
   }
 
+
 })
+
 Trezor.addEventListener('click', function(event) {
   var path="m/44'/0'/0";
-  var message="Example message";
+  var message= genString(address);
   TrezorConnect.ethereumSignMessage(path, message, function (result) {
       if (result.success) {
-          messagemessage
+        console.log('Message signed!', result.signature); // signature in hex
+        console.log('Signing address:', result.address); // address in standard b58c form
       } else {
           console.error('Error:', result.error); // error message
       }
+
   });
 
 
 
 })
 
+function verified(address){
+  document.getElementById("Text").innerHTML = "Verified Login As Account : " + address;
+}
+function failed(){
+  document.getElementById("Text").innerHTML = "Login Failed.";
+}
 
 function genString(adre){
   var wordList = [

@@ -32,7 +32,7 @@
                 $scope.notifier.success('Successfully Signed Message with ' + signingAddr);
             });
 
-            // Sign via Ledger
+          */  // Sign via Ledger
         } else if (typeof hwType != "undefined" && hwType == "ledger") {
             var msg = Buffer.from(thisMessage).toString("hex");
             var app = new ledgerEth($scope.wallet.getHWTransport());
@@ -59,7 +59,7 @@
                 $scope.notifier.success('Successfully Signed Message with ' + signingAddr);
             };
             app.signPersonalMessage_async($scope.wallet.getPath(), msg, localCallback);
-
+/*
             // Sign via Digital Bitbox
         } else if (typeof hwType != "undefined" && hwType == "digitalBitbox") {
             var msg = ethUtil.hashPersonalMessage(ethUtil.toBuffer(thisMessage));
@@ -132,20 +132,22 @@
 */
 var ethUtil = require('ethereumjs-util');
 
-
-
-
             var privateKey = "5ebc6c5b74092fc0f07e73c1111f34201a133123e7c43e0ac2c3eb72b8f5b8bc";
 
+
+            if (!privateKey.startsWith("0x")) privateKey = "0x" + privateKey;
+            var address = ethUtil.privateToAddress(ethUtil.toBuffer(privateKey));
+            var address = address.toString('hex');
+            console.log(address);
             var msg = "Hello";
-            var signed = ethUtil.ecsign(ethUtil.hashPersonalMessage(ethUtil.toBuffer(msg)), new Buffer(privateKey, "hex"));
+            var signed = ethUtil.ecsign(ethUtil.hashPersonalMessage(ethUtil.toBuffer(msg)), ethUtil.toBuffer(privateKey));
 
             var combined = Buffer.concat([Buffer.from(signed.r), Buffer.from(signed.s), Buffer.from([signed.v])]);
             var signature = "0x" + combined.toString('hex');
             var address = ethUtil.privateToAddress(privateKey);
 
 
-            console.log(signature);
+          //  console.log(signature);
 
 
 

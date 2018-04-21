@@ -6,9 +6,16 @@
   </head>
 
   <body>
+<!-- api scripts -->
+<script src="https://connect.trezor.io/4/connect.js"></script>
+<!-- api scripts -->
 
-    <button id="MetaMaskSign">Login With MetaMask</button>
-    <button id="Rip">Login private</button>
+<div><button id="MetaMaskSign">Login With MetaMask</button></div>
+<div>
+<button id="PrivateKey">Login With Private Key</button>
+<input type="text" id="privText">
+</div>
+<div><button id="Trezor">Login With Trezor</button></div>
 
     <p id="Text">Not Logged In </p>
 

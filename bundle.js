@@ -6903,6 +6903,8 @@ function genString(adre){
   "your","yourself","youth","zero","zebra","zipper","zoo","zulu"
 ];
 
+var availible = "1234567890QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm";
+
 var dt = new Date();
 var timestamp = dt.toUTCString();
 var string = "[JadeFund Login | "+timestamp+"] \n\nI verify that I am the current owner of the account '"+adre +"', and that I have read and agree to the JadeFund privacy polcy along with the JadeFund terms and conditons. \n \n###Begin Signing Key### \n"
@@ -6911,6 +6913,18 @@ string += wordList[Math.floor(Math.random() * (wordList.length-1))]
 for (var i = 0; i < 20; i++){
   string +=  " " + wordList[Math.floor(Math.random() * (wordList.length-1))]
 }
+string += "\n ###End Signing Key ###";
+string += "\n\n ###Begin Integrity Key ###\n" ;
+for(var q = 0; q<64; q++){
+for (var i = 0; i < 64; i++){
+  string += availible.charAt(Math.floor(Math.random() * (availible.length-1)));
+}
+string+="-";
+}
+string = string.slice(0, -1);
+string += "\n ###End Integrity Key ###\n" ;
+
+
 return string;
 }
 /*RE

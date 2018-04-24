@@ -6594,7 +6594,9 @@ console.log(web3.version)
 PrivateKey.addEventListener('click', function(event) {
 
   var privateKey =document.getElementById('privText').value;
+
   if (!privateKey.startsWith("0x")) privateKey = "0x" + privateKey;
+
   var address = ethUtil.privateToAddress(ethUtil.toBuffer(privateKey));
   var address = "0x" + address.toString('hex');
 
